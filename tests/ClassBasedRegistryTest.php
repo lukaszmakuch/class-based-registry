@@ -75,4 +75,16 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
         );
         $this->r->fetchValueByObjects([new Animal()]);
     }
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testTooManyObjectsWhenFetching()
+    {
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class]
+        );
+        $this->r->fetchValueByObjects([new Animal(), new Plant()]);
+    }
 }
