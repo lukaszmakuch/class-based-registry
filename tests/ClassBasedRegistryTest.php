@@ -13,6 +13,7 @@ use lukaszmakuch\ClassBasedRegistry\ClassBasedRegistry;
 use PHPUnit_Framework_TestCase;
 
 class Animal {}
+class Elephant extends Animal {}
 class Plant {}
 
 /**
@@ -43,5 +44,11 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
     {
         $this->r->associateValueWithClasses(42, [Animal::class]);
         $this->assertEquals(42, $this->r->fetchValueByObjects([new Plant()]));
+    }
+    
+    public function testInheritanceSupport()
+    {
+        $this->r->associateValueWithClasses(42, [Animal::class]);
+        $this->assertEquals(42, $this->r->fetchValueByObjects([new Elephant()]));
     }
 }
