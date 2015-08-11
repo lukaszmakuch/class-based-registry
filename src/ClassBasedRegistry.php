@@ -51,29 +51,23 @@ class ClassBasedRegistry
     
     protected function objectsAreExactInstancesOfClasses(array $objects, array $classes)
     {
-        $remainingObjects = [];
-        $remainingClasses = [];
+        $foundClasses = [];
+        $foundObjects = [];
         
         foreach ($objects as $singleObject) {
             foreach ($classes as $singleClass) {
-                if (!($singleObject instanceof $singleClass)) {
-                    $remainingObjects[] = $singleObject;
-                    $remainingClasses[] = $singleClass;
+                if ($singleObject instanceof $singleClass) {
+                    $foundClasses[] = $singleClass;
+                    $foundObjects[] = $singleObject;
                 }
             }
         }
         
-        if (empty($remainingObjects) && empty($remainingClasses)) {
-            return true;
-        } elseif (count($remainingObjects) === count($classes)) {
-            return false;
-        } elseif (!empty($remainingObjects) && !empty($remainingClasses)) {
-            return $this->objectsAreExactInstancesOfClasses(
-                $remainingObjects,
-                $remainingClasses
-            );
-        } else {
-            return false;
-        }
+        $remainingObjects = array_filter($objects, function ($sourceObject) use ($foundObjects) {
+            return !in_array($sourceObject, $foundObjects, true);
+        });
+        $remainingClasses = array_diff($classes, $foundClasses);
+        
+        return (empty($remainingObjects) && empty($remainingClasses));
     }
 }

@@ -51,4 +51,16 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
         $this->r->associateValueWithClasses(42, [Animal::class]);
         $this->assertEquals(42, $this->r->fetchValueByObjects([new Elephant()]));
     }
+    
+    public function testMoreThanOneClass()
+    {
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class, Plant::class]
+        );
+        $this->assertEquals(
+            42, 
+            $this->r->fetchValueByObjects([new Animal(), new Plant()])
+        );
+    }
 }
