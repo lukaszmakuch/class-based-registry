@@ -13,6 +13,7 @@ use lukaszmakuch\ClassBasedRegistry\ClassBasedRegistry;
 use PHPUnit_Framework_TestCase;
 
 class Animal {}
+class Plant {}
 
 /**
  * Tests all registry functionality.
@@ -33,5 +34,14 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
     {
         $this->r->associateValueWithClasses(42, [Animal::class]);
         $this->assertEquals(42, $this->r->fetchValueByObjects([new Animal()]));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testNotExistingKey()
+    {
+        $this->r->associateValueWithClasses(42, [Animal::class]);
+        $this->assertEquals(42, $this->r->fetchValueByObjects([new Plant()]));
     }
 }

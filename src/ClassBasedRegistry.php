@@ -45,6 +45,8 @@ class ClassBasedRegistry
                 return $valueToClassesTuple[self::STOREDVALS_VAL];
             }
         }
+        
+        throw new \InvalidArgumentException();
     }
     
     protected function objectsAreExactInstancesOfClasses(array $objects, array $classes)
@@ -63,6 +65,8 @@ class ClassBasedRegistry
         
         if (empty($remainingObjects) && empty($remainingClasses)) {
             return true;
+        } elseif (count($remainingObjects) === count($classes)) {
+            return false;
         } elseif (!empty($remainingObjects) && !empty($remainingClasses)) {
             return $this->objectsAreExactInstancesOfClasses(
                 $remainingObjects,
