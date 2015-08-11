@@ -1,0 +1,29 @@
+{
+    "name": "lukaszmakuch/class-based-registry",
+    "description": "Registry that allows to associate a value to one ore more classes and then fetch this value by passing objects that implements these classes",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Łukasz Makuch",
+            "email": "kontakt@lukaszmakuch.pl",
+            "homepage": "http://lukaszmakuch.pl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "lukaszmakuch\\ClassBasedRegistry\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "lukaszmakuch\\Condition\\tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.7.*",
+        "phpdocumentor/phpdocumentor": "2.*"
+    }
+}
