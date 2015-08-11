@@ -67,7 +67,7 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testTooManyObjectsWhenFetching()
+    public function testTooFewObjectsWhenFetching()
     {
         $this->r->associateValueWithClasses(
             42,
