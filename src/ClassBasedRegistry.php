@@ -10,7 +10,7 @@
 namespace lukaszmakuch\ClassBasedRegistry;
 
 /**
- * Allows to associate a value to one ore more classes
+ * Allows to associate a value to one or more classes
  * and then fetch this value by passing objects that implements these classes.
  *
  * @author Łukasz Makuch <kontakt@lukaszmakuch.pl>
