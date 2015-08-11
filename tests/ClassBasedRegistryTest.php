@@ -43,7 +43,7 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
     public function testNotExistingKey()
     {
         $this->r->associateValueWithClasses(42, [Animal::class]);
-        $this->assertEquals(42, $this->r->fetchValueByObjects([new Plant()]));
+        $this->r->fetchValueByObjects([new Plant()]);
     }
     
     public function testInheritanceSupport()
@@ -62,5 +62,17 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
             42, 
             $this->r->fetchValueByObjects([new Animal(), new Plant()])
         );
+    }
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testDifferentNumberOfArguments()
+    {
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class, Plant::class]
+        );
+        $this->r->fetchValueByObjects([new Animal()]);
     }
 }
