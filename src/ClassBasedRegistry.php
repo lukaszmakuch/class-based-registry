@@ -11,7 +11,7 @@ namespace lukaszmakuch\ClassBasedRegistry;
 
 /**
  * Allows to associate a value to one or more classes
- * and then fetch this value by passing objects that implements these classes.
+ * and then fetch this value by passing objects that implement these classes.
  *
  * @author Łukasz Makuch <kontakt@lukaszmakuch.pl>
  */
@@ -47,7 +47,7 @@ class ClassBasedRegistry
      * Associates the given value with one or more classes.
      *
      * @param mixed $valueToStore any value to store
-     * @param String[] $classes
+     * @param String[] $classes classes the value should be associated with
      *
      * @return null
      */
