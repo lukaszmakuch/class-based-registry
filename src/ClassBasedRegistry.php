@@ -17,27 +17,63 @@ namespace lukaszmakuch\ClassBasedRegistry;
  */
 class ClassBasedRegistry
 {
+    /**
+     * Key representing the stored value.
+     */
     const STOREDVALS_VAL = 0;
+    
+    /**
+     * Key representing array of associated classes.
+     */
     const STOREDVALS_CLASSES = 1;
     
-    protected $storedValues;
+    /**
+     * Holds stored values together with classes they are associated with.
+     * 
+     * @var array like 
+     * [
+     * self::STOREDVALS_VAL => $value,
+     * self::STOREDVALS_CLASSES => ["Class1" , "Class2", "Class3"]
+     * ]
+     */
+    protected $valuesWithAssociatedClasses;
     
     public function __construct()
     {
-        $this->storedValues = [];
+        $this->valuesWithAssociatedClasses = [];
     }
     
+    /**
+     * Associates the given value with one or more classes.
+     * 
+     * @param mixed $valueToStore any value to store
+     * @param String[] $classes
+     * 
+     * @return null
+     */
     public function associateValueWithClasses($valueToStore, array $classes)
     {
-        $this->storedValues[] = [
+        $this->valuesWithAssociatedClasses[] = [
             self::STOREDVALS_VAL => $valueToStore,
             self::STOREDVALS_CLASSES => $classes,
         ];
     }
     
+    /**
+     * Fetches a value previously associated with classes the given objects implement.
+     * 
+     * Inheritence is taken into account.
+     * The number of given objects and the number of classes associated with the value
+     * must be equal.
+     * 
+     * @param array $objects 
+     * 
+     * @return mixed previously stored value
+     * @throws \InvalidArgumentException when it's not possible to fetch any value
+     */
     public function fetchValueByObjects(array $objects)
     {
-        foreach ($this->storedValues as $valueToClassesTuple) {
+        foreach ($this->valuesWithAssociatedClasses as $valueToClassesTuple) {
             if ($this->objectsAreExactInstancesOfClasses(
                 $objects, 
                 $valueToClassesTuple[self::STOREDVALS_CLASSES]
@@ -49,6 +85,14 @@ class ClassBasedRegistry
         throw new \InvalidArgumentException();
     }
     
+    /**
+     * Checks whether all of the given objects implement all of the given classes.
+     * 
+     * @param array $objects
+     * @param String[] $classes
+     * 
+     * @return boolean
+     */
     protected function objectsAreExactInstancesOfClasses(array $objects, array $classes)
     {
         $foundClasses = [];
