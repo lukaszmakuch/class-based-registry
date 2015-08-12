@@ -115,6 +115,7 @@ class ClassBasedRegistry
             if ($obj instanceof $classToFind) {
                 $remainingObjects->detach($obj);
                 $objectFound = true;
+                break;
             }
         }
         
