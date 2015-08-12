@@ -51,3 +51,8 @@ try {
   //it was not possible to fetch any value by a plant
 }
 ```
+## Installation
+Use [composer](https://getcomposer.org) to get the latest version:
+```
+$ composer require lukaszmakuch/class-based-registry
+```
