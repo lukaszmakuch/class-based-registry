@@ -79,6 +79,18 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
         );
     }
     
+    public function testMoreThanOneClassInDifferentOrder()
+    {
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class, Plant::class]
+        );
+        $this->assertEquals(
+            42,
+            $this->r->fetchValueByObjects([new Plant(), new Animal()])
+        );
+    }
+    
     /**
      * @expectedException InvalidArgumentException
      */
