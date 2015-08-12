@@ -95,23 +95,37 @@ class ClassBasedRegistry
      */
     protected function objectsAreExactInstancesOfClasses(array $objects, array $classes)
     {
-        $foundClasses = [];
-        $foundObjects = [];
+        if (count($objects) !== count($classes)) { 
+            return false;
+        }
         
-        foreach ($objects as $singleObject) {
-            foreach ($classes as $singleClass) {
-                if ($singleObject instanceof $singleClass) {
-                    $foundClasses[] = $singleClass;
-                    $foundObjects[] = $singleObject;
-                }
+        $remainingObjects = new \SplObjectStorage();
+        foreach ($objects as $singleObj) {
+            $remainingObjects->attach($singleObj);
+        }
+        
+        return $this->objectsAreExactInstancesOfClassesImpl($remainingObjects, $classes);
+    }
+    
+    protected function objectsAreExactInstancesOfClassesImpl(\SplObjectStorage $remainingObjects, $classes)
+    {
+        $classToFind = array_pop($classes);
+        $objectFound = false;
+        foreach ($remainingObjects as $obj) {
+            if ($obj instanceof $classToFind) {
+                $remainingObjects->detach($obj);
+                $objectFound = true;
             }
         }
         
-        $remainingObjects = array_filter($objects, function ($sourceObject) use ($foundObjects) {
-            return !in_array($sourceObject, $foundObjects, true);
-        });
-        $remainingClasses = array_diff($classes, $foundClasses);
+        if (false === $objectFound) {
+            return false;
+        }
         
-        return (empty($remainingObjects) && empty($remainingClasses));
+        if (0 === $remainingObjects->count()) {
+            return true;
+        }
+        
+        return $this->objectsAreExactInstancesOfClassesImpl($remainingObjects, $classes);
     }
 }
