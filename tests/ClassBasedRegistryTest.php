@@ -33,8 +33,14 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
 
     public function testOneSimpleKey()
     {
-        $this->r->associateValueWithClasses(42, [Animal::class]);
-        $this->assertEquals(42, $this->r->fetchValueByObjects([new Animal()]));
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class]
+        );
+        $this->assertEquals(
+            42,
+            $this->r->fetchValueByObjects([new Animal()])
+        );
     }
 
     /**
@@ -42,14 +48,23 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
      */
     public function testNotExistingKey()
     {
-        $this->r->associateValueWithClasses(42, [Animal::class]);
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class]
+        );
         $this->r->fetchValueByObjects([new Plant()]);
     }
     
     public function testInheritanceSupport()
     {
-        $this->r->associateValueWithClasses(42, [Animal::class]);
-        $this->assertEquals(42, $this->r->fetchValueByObjects([new Elephant()]));
+        $this->r->associateValueWithClasses(
+            42,
+            [Animal::class]
+        );
+        $this->assertEquals(
+            42,
+            $this->r->fetchValueByObjects([new Elephant()])
+        );
     }
     
     public function testMoreThanOneClass()
@@ -59,7 +74,7 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
             [Animal::class, Plant::class]
         );
         $this->assertEquals(
-            42, 
+            42,
             $this->r->fetchValueByObjects([new Animal(), new Plant()])
         );
     }
