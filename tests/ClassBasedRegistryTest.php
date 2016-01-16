@@ -128,7 +128,7 @@ class ClassBasedRegistryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \lukaszmakuch\ClassBasedRegistry\Exception\ValueNotFound
      */
     public function testTooManyObjectsOfTheSameKindWhenFetching()
     {

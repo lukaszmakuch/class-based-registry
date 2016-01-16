@@ -9,6 +9,9 @@
 
 namespace lukaszmakuch\ClassBasedRegistry;
 
+use lukaszmakuch\ClassBasedRegistry\Exception\ValueNotFound;
+use SplObjectStorage;
+
 /**
  * Allows to associate a value to one or more classes
  * and then fetch this value by passing objects that implement these classes.
@@ -69,7 +72,7 @@ class ClassBasedRegistry
      * @param array $objects
      *
      * @return mixed previously stored value
-     * @throws \InvalidArgumentException when it's not possible to fetch any value
+     * @throws ValueNotFound when it's not possible to fetch any value
      */
     public function fetchValueByObjects(array $objects)
     {
@@ -82,7 +85,7 @@ class ClassBasedRegistry
             }
         }
 
-        throw new \InvalidArgumentException();
+        throw new ValueNotFound();
     }
 
     /**
@@ -99,7 +102,7 @@ class ClassBasedRegistry
             return false;
         }
 
-        $remainingObjects = new \SplObjectStorage();
+        $remainingObjects = new SplObjectStorage();
         foreach ($objects as $singleObj) {
             $remainingObjects->attach($singleObj);
         }
@@ -111,12 +114,12 @@ class ClassBasedRegistry
      * Performs actual checking on two groups
      * of identical length:classes and objects.
      * 
-     * @param \SplObjectStorage $remainingObjects remaining object that must
+     * @param SplObjectStorage $remainingObjects remaining object that must
      * implement implement classes
      * @param String[] $classes remaining classes
      * @return boolean
      */
-    protected function objectsAreExactInstancesOfClassesImpl(\SplObjectStorage $remainingObjects, $classes)
+    protected function objectsAreExactInstancesOfClassesImpl(SplObjectStorage $remainingObjects, $classes)
     {
         $classToFind = array_pop($classes);
         $objectFound = false;

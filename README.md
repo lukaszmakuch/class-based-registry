@@ -42,12 +42,12 @@ While fetching objects may be passed in any order:
 $r->fetchValueByObjects([new Plant(), new Elephant()]); //1970
 ```
 ### Throwing exceptions
-When it's not possible to obtain any value, then an 
-\InvalidArgumentException is thrown:
+When it's not possible to obtain any value, 
+then a \lukaszmakuch\ClassBasedRegistry\Exception\ValueNotFound exception is thrown:
 ```php
 try {
     $r->fetchValueByObjects([new Plant()]);
-} catch (\InvalidArgumentException $e) {
+} catch (\lukaszmakuch\ClassBasedRegistry\Exception\ValueNotFound $e) {
   //it was not possible to fetch any value by a plant
 }
 ```
